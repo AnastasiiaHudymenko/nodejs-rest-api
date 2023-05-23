@@ -8,22 +8,30 @@ const validateBody = require("../../middllwares/validateBody");
 
 const isValidId = require("../../middllwares/isValidId");
 
+const authentication = require("../../middllwares/authentication");
+
 const validateBodyFavorite = require("../../middllwares/validateBodyFavorite");
 
 const { schemaContact, updateFavoriteSchema } = require("../../models/contact");
 
-router.get("/", ctrs.getAll);
+router.get("/", authentication, ctrs.getAll);
 
-router.get("/:contactId", isValidId, ctrs.getById);
+router.get("/:contactId", authentication, isValidId, ctrs.getById);
 
-router.post("/", validateBody(schemaContact), ctrs.add);
+router.post("/", authentication, validateBody(schemaContact), ctrs.add);
 
-router.delete("/:contactId", isValidId, ctrs.remove);
+router.delete("/:contactId", authentication, isValidId, ctrs.remove);
 
-router.put("/:contactId", validateBody(schemaContact), ctrs.update);
+router.put(
+  "/:contactId",
+  authentication,
+  validateBody(schemaContact),
+  ctrs.update
+);
 
 router.patch(
   "/:contactId/favorite",
+  authentication,
   isValidId,
   validateBodyFavorite(updateFavoriteSchema),
   ctrs.updateStatusContact
