@@ -1,5 +1,7 @@
 const express = require("express");
 
+const upload = require("../../middllwares/upload");
+
 const validateBody = require("../../middllwares/validateBody");
 
 const validateSubscription = require("../../middllwares/validateSubscription");
@@ -29,6 +31,13 @@ router.patch(
   authentication,
   validateSubscription(updateSchema),
   ctrl.update
+);
+
+router.patch(
+  "/avatars",
+  authentication,
+  upload.single("avatarURL"),
+  ctrl.uploadAvatar
 );
 
 module.exports = router;
