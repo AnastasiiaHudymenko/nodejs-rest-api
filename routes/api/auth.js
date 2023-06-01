@@ -6,12 +6,15 @@ const validateBody = require("../../middllwares/validateBody");
 
 const validateSubscription = require("../../middllwares/validateSubscription");
 
+const validateBodyOneField = require("../../middllwares/validateBodyFavorite");
+
 const ctrl = require("../../controllers/auth");
 
 const {
   registerSchema,
   loginSchema,
   updateSchema,
+  emailSchema,
 } = require("../../models/user");
 
 const authentication = require("../../middllwares/authentication");
@@ -19,6 +22,10 @@ const authentication = require("../../middllwares/authentication");
 const router = express.Router();
 
 router.post("/register", validateBody(registerSchema), ctrl.register);
+
+router.get("/verify/:verificationToken", ctrl.verifyEmail);
+
+router.post("/verify", validateBodyOneField(emailSchema), ctrl.sendVerifyEmail);
 
 router.post("/login", validateBody(loginSchema), ctrl.login);
 
