@@ -10,7 +10,7 @@ const isValidId = require("../../middllwares/isValidId");
 
 const authentication = require("../../middllwares/authentication");
 
-const validateBodyFavorite = require("../../middllwares/validateBodyFavorite");
+const validateBodyOneField = require("../../middllwares/validateBodyFavorite");
 
 const { schemaContact, updateFavoriteSchema } = require("../../models/contact");
 
@@ -33,7 +33,7 @@ router.patch(
   "/:contactId/favorite",
   authentication,
   isValidId,
-  validateBodyFavorite(updateFavoriteSchema),
+  validateBodyOneField(updateFavoriteSchema),
   ctrs.updateStatusContact
 );
 
